@@ -1,6 +1,6 @@
 # Multi-stage build for Spring Boot application
 # Stage 1: Build stage with Maven
-FROM eclipse-temurin:25-jdk-alpine AS builder
+FROM eclipse-temurin:21-jdk-alpine AS builder
 
 # Set working directory
 WORKDIR /build
@@ -17,7 +17,7 @@ RUN chmod +x mvnw && \
     ./mvnw clean package -DskipTests -q
 
 # Stage 2: Runtime stage
-FROM eclipse-temurin:25-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 
 # Create a non-root user for security
 RUN addgroup -S spring && adduser -S spring -G spring
