@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="light" lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title th:text="${titulo} + ' | LOBOSO'">LOBOSO - Mi Perfil</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/admin/css/perfil.css}"/>
+    
+    <style>
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .animate-fade-in-up { animation: fadeInUp 0.4s ease-out forwards; }
+        .animate-slide-in-right { animation: slideInRight 0.3s ease-out; }
+        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 78, 138, 0.08); }
+        .sidebar-gradient { background: linear-gradient(180deg, #004e8a 0%, #1E3A8A 100%); }
+        .text-gradient { background: linear-gradient(90deg, #004e8a 0%, #286c12 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .profile-card {
+            transition: all 0.3s ease;
+        }
+        .profile-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #004e8a 0%, #003366 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 78, 138, 0.3);
+        }
+        .btn-primary:active { transform: scale(0.97); }
+        
+        .btn-secondary {
+            background: #286c12;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background: #1a4a0c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(40, 108, 18, 0.3);
+        }
+        .btn-secondary:active { transform: scale(0.97); }
+        
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 14px 24px;
+            border-radius: 14px;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            animation: slideUp 0.3s ease;
+            max-width: 400px;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .toast-success { background: linear-gradient(135deg, #286c12 0%, #1a4a0c 100%); }
+        .toast-error { background: linear-gradient(135deg, #ba1a1a 0%, #8a0a0a 100%); }
+        
+        .input-field {
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .input-field:focus {
+            border-color: #004e8a;
+            box-shadow: 0 0 0 3px rgba(0, 78, 138, 0.12);
+        }
+        
+        /* Avatar grande */
+        .avatar-large {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #004e8a, #0066b2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #004e8a;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-background font-body-md text-on-surface overflow-hidden">
+
+<div class="flex h-screen w-full">
+    
+    <!-- Sidebar con th:replace (activo = 'perfil') -->
+    <div th:replace="~{admin/fragments/sidebar :: sidebar (active='perfil')}"></div>
+    
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col relative overflow-y-auto">
+        
+        <!-- Header -->
+        <header class="sticky top-0 z-40 glass-panel h-24 px-12 flex items-center justify-between">
+            <div>
+                <div class="flex items-center gap-2 text-on-surface-variant/60 text-sm font-medium mb-1">
+                    <span class="material-symbols-outlined text-[16px]">home</span>
+                    <span>Inicio</span>
+                    <span class="text-gray-300 mx-1">/</span>
+                    <span class="text-primary font-semibold">Mi Perfil</span>
+                </div>
+                <h2 class="font-headline-md text-[28px] font-bold text-gradient tracking-tight" th:text="${titulo}">Mi Perfil</h2>
+            </div>
+            <div class="flex items-center gap-3 bg-white/50 backdrop-blur-sm px-5 py-2.5 rounded-full border border-surface-variant/30 shadow-sm">
+                <span class="material-symbols-outlined text-primary text-[20px]">calendar_today</span>
+                <span id="current-date" class="text-on-surface font-medium text-sm tracking-wide"></span>
+            </div>
+        </header>
+        
+        <!-- Content -->
+        <section class="p-8 flex-1 max-w-5xl mx-auto w-full">
+            
+            <!-- Loading -->
+            <div id="loadingIndicator" class="flex items-center justify-center py-20">
+                <div class="spinner"></div>
+                <span class="ml-4 text-on-surface-variant">Cargando perfil...</span>
+            </div>
+            
+            <!-- Contenido (oculto inicialmente) -->
+            <div id="profileContent" class="hidden space-y-6">
+                
+                <!-- Tarjeta de perfil -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden profile-card">
+                    <div class="p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50/50 to-white">
+                        <div class="flex items-center gap-5">
+                            <div id="avatarContainer" class="avatar-large">
+                                <span id="avatarInitial">U</span>
+                            </div>
+                            <div>
+                                <h3 id="perfilNombre" class="text-2xl font-bold text-gray-900">Cargando...</h3>
+                                <p id="perfilEmail" class="text-gray-500">Cargando...</p>
+                                <div class="flex items-center gap-3 mt-1">
+                                    <span id="perfilRol" class="text-xs font-medium px-3 py-1 rounded-full bg-primary/10 text-primary">-</span>
+                                    <span id="perfilEstado" class="text-xs font-medium px-3 py-1 rounded-full bg-green-100 text-green-700">● Activo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Formulario de perfil -->
+                    <form id="perfilForm" class="p-6 space-y-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nombre completo</label>
+                                <input type="text" id="nombre" name="nombre" required 
+                                       class="input-field w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-0">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-1.5">Correo electrónico</label>
+                                <input type="email" id="email" name="email" required 
+                                       class="input-field w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-0">
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" id="btnActualizarPerfil" class="btn-primary px-8 py-2.5 rounded-xl text-white font-semibold text-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">save</span>
+                                Guardar Cambios
+                            </button>
+                        </div>
+                        <div id="perfilMensaje" class="hidden text-sm font-medium"></div>
+                    </form>
+                </div>
+                
+                <!-- Tarjeta de Cambiar Contraseña -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden profile-card">
+                    <div class="p-6 border-b border-gray-200 bg-gradient-to-r from-green-50/50 to-white">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-secondary text-3xl">lock</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">Cambiar Contraseña</h3>
+                                <p class="text-gray-500 text-sm">Actualiza tu contraseña de acceso al sistema</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form id="passwordForm" class="p-6 space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Contraseña actual</label>
+                            <input type="password" id="currentPassword" required 
+                                   class="input-field w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-0">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nueva contraseña</label>
+                            <input type="password" id="newPassword" required 
+                                   class="input-field w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-0">
+                            <p class="text-xs text-gray-500 mt-1.5">Mínimo 6 caracteres</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1.5">Confirmar nueva contraseña</label>
+                            <input type="password" id="confirmPassword" required 
+                                   class="input-field w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-0">
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" id="btnCambiarPassword" class="btn-secondary px-8 py-2.5 rounded-xl text-white font-semibold text-sm flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">key</span>
+                                Actualizar Contraseña
+                            </button>
+                        </div>
+                        <div id="passwordMensaje" class="hidden text-sm font-medium"></div>
+                    </form>
+                </div>
+            </div>
+            
+        </section>
+        
+        <!-- Footer -->
+        <footer class="px-12 py-6 bg-transparent text-[11px] text-gray-400 flex justify-between items-center border-t border-gray-200">
+            <p>© 2025 LOBOSO SAS DE CV. TODOS LOS DERECHOS RESERVADOS.</p>
+            <div class="flex gap-8">
+                <a class="hover:text-primary transition-colors" href="#">TÉRMINOS</a>
+                <a class="hover:text-primary transition-colors" href="#">PRIVACIDAD</a>
+                <a class="hover:text-primary transition-colors" href="#">SOPORTE TÉCNICO</a>
+            </div>
+        </footer>
+        
+    </main>
+</div>
+
+<!-- Toast container -->
+<div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3"></div>
+
+<!-- Scripts -->
+<script th:src="@{/admin/js/perfil.js}"></script>
+</body>
+</html>

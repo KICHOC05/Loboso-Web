@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- ═══ FOOTER ═══ -->
+<th:block th:fragment="footer">
+  <footer class="bg-on-background text-white pt-20 pb-8">
+    <div class="max-w-[1280px] mx-auto px-4 md:px-12">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+
+        <!-- Marca -->
+        <div class="space-y-5 md:col-span-1">
+          <img alt="LOBOSO" class="h-12 brightness-0 invert"
+               th:src="@{/img/loboso-logo.jpeg}"/>
+          <p class="text-[14px] text-white/60 leading-relaxed">
+            Soluciones de impresión de alta precisión para el mercado corporativo mexicano.
+          </p>
+        </div>
+
+        <!-- Navegación -->
+        <div class="space-y-3">
+          <h4 class="text-[13px] font-bold text-secondary-fixed uppercase tracking-wider mb-4">Navegación</h4>
+          <a href="#inicio"    class="block text-[14px] text-white/60 hover:text-white transition-colors">Inicio</a>
+          <a href="#servicios" class="block text-[14px] text-white/60 hover:text-white transition-colors">Servicios</a>
+          <a href="#nosotros"  class="block text-[14px] text-white/60 hover:text-white transition-colors">Nosotros</a>
+          <a href="#galeria"   class="block text-[14px] text-white/60 hover:text-white transition-colors">Galería</a>
+        </div>
+
+        <!-- Contacto -->
+        <div class="space-y-3">
+          <h4 class="text-[13px] font-bold text-secondary-fixed uppercase tracking-wider mb-4">Contacto</h4>
+          <p class="text-[14px] text-white/60">WhatsApp: +52 55 1947 7201</p>
+          <p class="text-[14px] text-white/60">Email: contacto@loboso.com</p>
+          <p class="text-[14px] text-white/60">CDMX, México</p>
+        </div>
+
+        <!-- Legal -->
+        <div class="space-y-3">
+          <h4 class="text-[13px] font-bold text-secondary-fixed uppercase tracking-wider mb-4">Legal</h4>
+          <a href="#" class="block text-[14px] text-white/60 hover:text-white transition-colors">Aviso de Privacidad</a>
+          <a href="#" class="block text-[14px] text-white/60 hover:text-white transition-colors">Términos y Condiciones</a>
+        </div>
+      </div>
+
+      <div class="border-t border-white/10 pt-6 text-center md:text-left">
+        <p class="text-[13px] text-white/40">© 2025 LOBOSO SAS DE CV. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script principal -->
+  <script th:src="@{/js/main.js}"></script>
+</th:block>
+
+</body>
+</html>

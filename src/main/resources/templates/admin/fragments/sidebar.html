@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="sidebar" class="sidebar-gradient w-72 flex flex-col justify-between py-8 px-6 text-white shrink-0 relative overflow-hidden">
+    <div class="relative z-10">
+        <!-- Brand - Con Logo en lugar de icono -->
+        <div class="flex flex-col gap-2 mb-12">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden">
+                    <img th:src="@{/img/loboso-logo.jpeg}" 
+                         alt="LOBOSO" 
+                         class="w-full h-full object-cover rounded-xl"
+                         onerror="this.src='https://via.placeholder.com/48x48/004e8a/white?text=L'"/>
+                </div>
+                <div>
+                    <h1 class="font-headline-md text-headline-md leading-none tracking-tight font-extrabold">LOBOSO</h1>
+                    <p class="text-[10px] uppercase tracking-[0.2em] opacity-70 mt-1 font-semibold">Soluciones Gráficas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nav Links -->
+        <nav class="space-y-2">
+            <a th:href="@{/admin/dashboard}"
+               class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300"
+               th:classappend="${active == 'dashboard'} ? 'bg-white/10 text-white font-bold border-l-4 border-secondary-fixed' : 'border-l-4 border-transparent hover:bg-white/5 text-white/70 hover:text-white hover:translate-x-1'">
+                <span class="material-symbols-outlined text-xl">dashboard</span>
+                <span class="font-label-md text-label-md">Dashboard</span>
+            </a>
+
+            <a th:href="@{/admin/usuarios}"
+               class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 border-l-4 border-transparent hover:bg-white/5 text-white/70 hover:text-white hover:translate-x-1">
+                <span class="material-symbols-outlined text-xl">group</span>
+                <span class="font-label-md text-label-md">Usuarios</span>
+            </a>
+
+            <a th:href="@{/admin/servicios}"
+               class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 border-l-4 border-transparent hover:bg-white/5 text-white/70 hover:text-white hover:translate-x-1">
+                <span class="material-symbols-outlined text-xl">print_connect</span>
+                <span class="font-label-md text-label-md">Servicios</span>
+            </a>
+
+            <!-- Perfil (antes Configuración) -->
+            <a th:href="@{/admin/perfil}"
+               class="group flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300"
+               th:classappend="${active == 'perfil'} ? 'bg-white/10 text-white font-bold border-l-4 border-secondary-fixed' : 'border-l-4 border-transparent hover:bg-white/5 text-white/70 hover:text-white hover:translate-x-1'">
+                <span class="material-symbols-outlined text-xl">person</span>
+                <span class="font-label-md text-label-md">Mi Perfil</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Logout -->
+    <div class="relative z-10 pt-6 mt-4 border-t border-white/10">
+        <a href="javascript:void(0)" onclick="confirmLogout()"
+           class="flex items-center gap-4 px-4 py-3 rounded-xl text-white/60 hover:text-white hover:bg-error/20 transition-all duration-300">
+            <span class="material-symbols-outlined text-xl">logout</span>
+            <span class="font-label-md text-label-md">Cerrar Sesión</span>
+        </a>
+    </div>
+
+    <!-- Atmospheric BG Element -->
+    <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-secondary-fixed/10 rounded-full blur-3xl"></div>
+</div>
+
+<!-- Overlay para móvil -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+</html>

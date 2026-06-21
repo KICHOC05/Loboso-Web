@@ -1,0 +1,541 @@
+/* ============================================================
+   LOBOSO — Hoja de estilos principal
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Hanken Grotesk', sans-serif;
+  color: #191c21;
+  background: #f8f9ff;
+  overflow-x: hidden;
+}
+
+/* ── HEADER ── */
+#site-header { transition: background .35s, box-shadow .35s; }
+#site-header.solid {
+  background: rgba(255,255,255,.92) !important;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 #e1e2e9;
+}
+#site-header.solid .nav-a          { color: #191c21; }
+#site-header.solid .nav-a:hover    { color: #004e8a; }
+#site-header.solid #logo-img       { filter: none; }
+
+/* ── MOBILE MENU ── */
+#mob-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .38s cubic-bezier(.4,0,.2,1);
+}
+#mob-menu.open { max-height: 400px; }
+
+.ham-line {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform .3s, opacity .3s;
+}
+#site-header.solid .ham-line { background: #191c21; }
+
+/* ── SCROLL FADE UP ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.in { opacity: 1; transform: none; }
+
+/* ── SERVICE CARDS ── */
+.svc-card {
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.svc-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.1);
+  border-color: #004e8a;
+}
+
+/* ── GALLERY HOVER ── */
+.gal-img img { transition: transform .4s ease; }
+.gal-img:hover img { transform: scale(1.06); }
+
+/* ── BUTTONS ── */
+.btn-blue {
+  transition: background .2s, transform .15s, box-shadow .2s;
+}
+.btn-blue:hover {
+  background: #0066b2;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0,78,138,.3);
+}
+.btn-blue:active { transform: scale(.97); }
+
+.btn-outline {
+  transition: background .2s, color .2s, transform .15s, box-shadow .2s;
+}
+.btn-outline:hover {
+  background: rgba(255,255,255,.1);
+  transform: translateY(-1px);
+}
+
+/* ── FORM INPUTS ── */
+.fi { transition: border-color .2s, box-shadow .2s; outline: none; }
+.fi:focus {
+  border-color: #004e8a;
+  box-shadow: 0 0 0 3px rgba(0,78,138,.12);
+}
+
+/* ── CLIENT LOGOS ── */
+.client-item { transition: color .2s; }
+.client-item:hover { color: #191c21; }
+
+/* ── WHATSAPP FAB ── */
+.wa-fab { transition: transform .2s, box-shadow .2s; }
+.wa-fab:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 24px rgba(37,211,102,.5);
+}
+/* ============================================================
+   CARRUSEL DE CLIENTES - MEJORADO PARA MÓVILES
+   ============================================================ */
+
+.client-carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+    padding: 8px 0;
+}
+
+.client-carousel {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 20px;
+    padding: 8px 0;
+}
+
+/* Cada item del carrusel */
+.client-carousel-item {
+    flex: 0 0 calc(20% - 16px);
+    min-width: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #e1e2e9;
+    transition: all 0.3s ease;
+    cursor: default;
+    user-select: none;
+    min-height: 120px;
+}
+
+.client-carousel-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    border-color: #004e8a;
+}
+
+/* Imagen del cliente - TAMAÑO MEJORADO */
+.client-carousel-item img {
+    width: 100%;
+    max-width: 140px;
+    height: 70px;
+    object-fit: contain;
+    transition: all 0.4s ease;
+    filter: grayscale(0.8) opacity(0.6);
+}
+
+.client-carousel-item:hover img {
+    filter: grayscale(0) opacity(1);
+    transform: scale(1.05);
+}
+
+/* Indicadores (dots) */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 28px;
+}
+
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #c1c7d3;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.carousel-dot.active {
+    background: #004e8a;
+    width: 32px;
+    border-radius: 4px;
+}
+
+.carousel-dot:hover {
+    background: #004e8a;
+    opacity: 0.7;
+}
+
+/* ── RESPONSIVE MEJORADO ── */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .client-carousel-item {
+        flex: 0 0 calc(25% - 16px);
+        min-width: 120px;
+        padding: 20px 12px;
+        min-height: 100px;
+    }
+    
+    .client-carousel-item img {
+        max-width: 110px;
+        height: 60px;
+    }
+    
+    .client-carousel {
+        gap: 16px;
+    }
+}
+
+/* Tablets pequeñas y móviles grandes */
+@media (max-width: 768px) {
+    .client-carousel-item {
+        flex: 0 0 calc(33.333% - 14px);
+        min-width: 100px;
+        padding: 18px 12px;
+        min-height: 90px;
+    }
+    
+    .client-carousel-item img {
+        max-width: 90px;
+        height: 50px;
+    }
+    
+    .client-carousel {
+        gap: 14px;
+    }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+    .client-carousel-item {
+        flex: 0 0 calc(50% - 10px);
+        min-width: 80px;
+        padding: 16px 10px;
+        min-height: 80px;
+        border-radius: 12px;
+    }
+    
+    .client-carousel-item img {
+        max-width: 80px;
+        height: 45px;
+    }
+    
+    .client-carousel {
+        gap: 10px;
+        padding: 4px 0;
+    }
+    
+    .carousel-dots {
+        gap: 8px;
+        margin-top: 20px;
+    }
+    
+    .carousel-dot {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .carousel-dot.active {
+        width: 24px;
+    }
+}
+
+/* ============================================================
+   SECCIÓN ARTÍCULOS PROMOCIONALES — BANNER ESPECIAL
+   ============================================================ */
+
+.promo-banner-section {
+  position: relative;
+  padding: 80px 0;
+  overflow: hidden;
+  background: #191c21;
+}
+
+/* Gradiente de fondo animado */
+.promo-banner-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 80% 50%, rgba(0,78,138,.45) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(40,108,18,.20) 0%, transparent 60%),
+    linear-gradient(135deg, #191c21 0%, #1e2530 100%);
+  animation: promoBgShift 8s ease-in-out infinite alternate;
+}
+@keyframes promoBgShift {
+  from { opacity: 1; }
+  to   { opacity: .85; }
+}
+
+/* Textura de puntos */
+.promo-banner-noise {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+/* Layout interno */
+.promo-banner-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 64px;
+}
+
+/* Columna izquierda */
+.promo-banner-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Badge pill */
+.promo-banner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(170,246,140,.12);
+  border: 1px solid rgba(170,246,140,.25);
+  color: #aaf68c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+}
+
+/* Título */
+.promo-banner-title {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  margin-bottom: 20px;
+}
+.promo-accent {
+  background: linear-gradient(90deg, #004e8a, #aaf68c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Descripción */
+.promo-banner-desc {
+  font-size: 16px;
+  color: rgba(255,255,255,.65);
+  line-height: 1.75;
+  margin-bottom: 28px;
+  max-width: 500px;
+}
+.promo-banner-desc strong {
+  color: rgba(255,255,255,.90);
+  font-weight: 600;
+}
+
+/* Pills de técnicas */
+.promo-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 36px;
+}
+.promo-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  color: rgba(255,255,255,.80);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 100px;
+  transition: background .2s, border-color .2s, color .2s;
+}
+.promo-pill:hover {
+  background: rgba(255,255,255,.13);
+  border-color: rgba(255,255,255,.25);
+  color: #fff;
+}
+.promo-pill svg { color: #aaf68c; flex-shrink: 0; }
+
+/* Botón CTA */
+.promo-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #004e8a;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 12px;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.15);
+  transition: background .2s, transform .15s, box-shadow .2s, gap .2s;
+  position: relative;
+  overflow: hidden;
+}
+.promo-cta-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.08) 0%, transparent 60%);
+}
+.promo-cta-btn:hover {
+  background: #0066b2;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,78,138,.50);
+  gap: 14px;
+}
+.promo-cta-btn:active { transform: scale(.97); }
+
+/* ── Columna derecha: visual ── */
+.promo-banner-visual {
+  width: 380px;
+  flex-shrink: 0;
+}
+
+/* Grid de mini tarjetas */
+.promo-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.promo-mini-card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 16px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.promo-mini-card:hover {
+  background: rgba(255,255,255,.10);
+  border-color: rgba(255,255,255,.20);
+  transform: translateY(-3px);
+}
+
+.promo-mini-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.promo-mini-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,.80);
+  line-height: 1.4;
+}
+
+/* Barra de stats */
+.promo-stat-bar {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.promo-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.promo-stat-num {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.promo-stat-lbl {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,.45);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.promo-stat-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(255,255,255,.12);
+  flex-shrink: 0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .promo-banner-inner {
+    gap: 40px;
+  }
+  .promo-banner-visual {
+    width: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .promo-banner-section {
+    padding: 60px 0;
+  }
+  .promo-banner-inner {
+    flex-direction: column;
+    gap: 48px;
+  }
+  .promo-banner-visual {
+    width: 100%;
+  }
+  .promo-banner-desc {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .promo-banner-title {
+    font-size: 26px;
+  }
+  .promo-card-grid {
+    gap: 10px;
+  }
+  .promo-mini-card {
+    padding: 16px 12px;
+  }
+  .promo-cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

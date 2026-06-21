@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  loboso:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: loboso-app
+    ports:
+      - "8080:8080"
+    environment:
+      # Agregar aquí variables de entorno según necesites
+      - SPRING_PROFILES_ACTIVE=docker
+    # Descomentar para desarrollo con volúmenes
+    # volumes:
+    #   - ./src:/app/src
+    #   - ./target:/app/target
+    restart: unless-stopped
+    networks:
+      - loboso-network
+
+networks:
+  loboso-network:
+    driver: bridge
